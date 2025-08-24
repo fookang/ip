@@ -1,20 +1,25 @@
 import java.util.Scanner;
 
 public class Kiwee {
+    private static final String PARTITION = "____________________________________________________________";
+
+    private static final String LOGO = PARTITION + "\n"
+            + " Hello! I'm Kiwee \uD83E\uDD5D \n"
+            + " How can I help you?\n"
+            + PARTITION;
+
+    private static final String BYE_MESSAGE = PARTITION + "\n"
+            + " Bye \uD83D\uDC4B Hope to see you again soon!\n"
+            + PARTITION;
+
+    private static final int CAPACITY = 100;
+
     public static void main(String[] args) {
-        final String PARTITION = "____________________________________________________________";
-
-        final String LOGO = PARTITION + "\n"
-                + " Hello! I'm Kiwee \uD83E\uDD5D \n"
-                + " How can I help you?\n"
-                + PARTITION;
-
-        final String BYE_MESSAGE = PARTITION + "\n"
-                + " Bye \uD83D\uDC4B Hope to see you again soon!\n"
-                + PARTITION;
-
-        Scanner input = new Scanner(System.in);
         System.out.println(LOGO);
+
+        String[] list = new String[CAPACITY];
+        int size = 0;
+        Scanner input = new Scanner(System.in);
 
         while (true) {
             String userInput = input.nextLine().trim();
@@ -22,11 +27,25 @@ public class Kiwee {
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println(BYE_MESSAGE);
                 break;
+
+            } else if (userInput.equalsIgnoreCase("list")) {
+                System.out.println(PARTITION );
+                for (int i = 0; i < size; i++) {
+                    System.out.println(" " + (i+1) + ". " + list[i]);
+                }
+                System.out.println(PARTITION);
+
             } else if (!userInput.isEmpty()) {
-                String result = PARTITION + "\n"
-                        + " " + userInput + "\n"
-                        + PARTITION;
-                System.out.println(result);
+                if (size < CAPACITY) {
+                    list[size++] = userInput;
+                    System.out.println(PARTITION);
+                    System.out.println(" Added: " + userInput);
+                    System.out.println(PARTITION);
+                } else {
+                    System.out.println(PARTITION);
+                    System.out.println(" Capacity of 100 is reached");
+                    System.out.println(PARTITION);
+                }
             }
             // else: ignore blank line
         }
