@@ -9,7 +9,7 @@ public class Kiwee {
             + PARTITION;
 
     private static final String BYE_MESSAGE = PARTITION + "\n"
-            + " Bye \uD83D\uDC4B Hope to see you again soon!\n"
+            + " Bye \uD83D\uDC4B Kiwee hope to see you again soon!\n"
             + PARTITION;
 
     private static final int CAPACITY = 100;
@@ -17,8 +17,9 @@ public class Kiwee {
     public static void main(String[] args) {
         System.out.println(LOGO);
 
-        String[] list = new String[CAPACITY];
+        Task[] tasks = new Task[CAPACITY];
         int size = 0;
+
         Scanner input = new Scanner(System.in);
 
         while (true) {
@@ -31,13 +32,13 @@ public class Kiwee {
             } else if (userInput.equalsIgnoreCase("list")) {
                 System.out.println(PARTITION );
                 for (int i = 0; i < size; i++) {
-                    System.out.println(" " + (i+1) + ". " + list[i]);
+                    System.out.println(" " + (i+1) + ". " + tasks[i].getDescription());
                 }
                 System.out.println(PARTITION);
 
             } else if (!userInput.isEmpty()) {
                 if (size < CAPACITY) {
-                    list[size++] = userInput;
+                    tasks[size++] = new Task(userInput);
                     System.out.println(PARTITION);
                     System.out.println(" Added: " + userInput);
                     System.out.println(PARTITION);
