@@ -33,28 +33,16 @@ public class Kiwee {
         System.out.println(PARTITION);
     }
 
-    private static void printMaxCapacityMessage() {
-        System.out.println(PARTITION);
-        System.out.println(" Capacity of 100 is reached");
-        System.out.println(PARTITION);
-    }
-
-    private static void handleCompletionCommand(String command, String variable) {
+    private static void handleCompletionCommand(String command, String variable) throws KiweeException {
         int id;
         try {
             id = Integer.parseInt(variable);
         } catch (NumberFormatException e) {
-            System.out.println(PARTITION);
-            System.out.println(" Invalid ID");
-            System.out.println(PARTITION);
-            return;
+            throw new KiweeException("Invalid ID");
         }
 
         if (id < 1 || id > size) {
-            System.out.println(PARTITION);
-            System.out.println(" Invalid ID");
-            System.out.println(PARTITION);
-            return;
+            throw new KiweeException("Invalid ID");
         }
 
         if (command.equals("mark")) {
@@ -71,20 +59,19 @@ public class Kiwee {
         System.out.println(PARTITION);
     }
 
-    private static void addTodo(String description) {
+    private static void addTodo(String description) throws KiweeException {
         if (size < CAPACITY) {
             tasks[size++] = new Todo(description);
             printAddMessage(tasks[size - 1]);
         } else {
-            printMaxCapacityMessage();
+            throw new KiweeException("Capacity of 100 is reached");
         }
     }
 
-    private static void addDeadline(String input) {
+    private static void addDeadline(String input) throws KiweeException {
         String[] words = input.split("/by", 2);
         if (words.length <= 1) {
-            printError();
-            return;
+            throw new KiweeCommandException("Invalid command");
         }
         String description = words[0].trim();
         String by = words[1].trim();
@@ -92,15 +79,14 @@ public class Kiwee {
             tasks[size++] = new Deadline(description, by);
             printAddMessage(tasks[size - 1]);
         } else {
-            printMaxCapacityMessage();
+            throw new KiweeException("Capacity of 100 is reached");
         }
     }
 
-    private static void addEvent(String input) {
+    private static void addEvent(String input) throws KiweeException {
         String[] words = input.split("/from", 2);
         if (words.length <= 1) {
-            printError();
-            return;
+            throw new KiweeCommandException("Invalid command");
         }
         String description = words[0].trim();
 
@@ -108,8 +94,7 @@ public class Kiwee {
         String[] details = time.split("/to", 2);
 
         if (details.length <= 1) {
-            printError();
-            return;
+            throw new KiweeCommandException("Invalid command");
         }
 
         String from = details[0].trim();
@@ -119,12 +104,11 @@ public class Kiwee {
             tasks[size++] = new Event(description, from, to);
             printAddMessage(tasks[size - 1]);
         } else {
-            printMaxCapacityMessage();
+            throw new KiweeException("Capacity of 100 is reached");
         }
     }
 
     private static void printError() {
-        System.out.println(PARTITION);
         System.out.print("""
                  Input valid command
                  To add todo:       todo <description>
@@ -133,7 +117,6 @@ public class Kiwee {
                  Mark / Unmark:     mark <id> | unmark <id>
                  Other:             list | bye
                 """);
-        System.out.println(PARTITION);
     }
 
     public static void main(String[] args) {
@@ -152,36 +135,45 @@ public class Kiwee {
             String[] words = userInput.split("\\s+", 2);
             String command = words[0].toLowerCase();
             String rest = words.length > 1 ? words[1] : "";
+            try {
+                switch (command) {
+                case "bye":
+                    System.out.println(BYE_MESSAGE);
+                    return;
 
-            switch (command) {
-            case "bye":
-                System.out.println(BYE_MESSAGE);
-                return;
+                case "list":
+                    printTask();
+                    break;
 
-            case "list":
-                printTask();
-                break;
+                case "mark":
+                case "unmark":
+                    handleCompletionCommand(command, rest);
+                    break;
 
-            case "mark":
-            case "unmark":
-                handleCompletionCommand(command, rest);
-                break;
+                case "todo":
+                    addTodo(rest);
+                    break;
 
-            case "todo":
-                addTodo(rest);
-                break;
+                case "deadline":
+                    addDeadline(rest);
+                    break;
 
-            case "deadline":
-                addDeadline(rest);
-                break;
+                case "event":
+                    addEvent(rest);
+                    break;
 
-            case "event":
-                addEvent(rest);
-                break;
-
-            default:
+                default:
+                    throw new KiweeCommandException(command + " is not a valid command");
+                }
+            } catch (KiweeCommandException e) {
+                System.out.println(PARTITION);
+                System.out.println(" " + e.getMessage());
                 printError();
-                break;
+                System.out.println(PARTITION);
+            } catch (KiweeException e) {
+                System.out.println(PARTITION);
+                System.out.println(" " + e.getMessage());
+                System.out.println(PARTITION);
             }
         }
     }
