@@ -1,3 +1,12 @@
+package Kiwee;
+
+import Kiwee.exception.KiweeCommandException;
+import Kiwee.exception.KiweeException;
+import Kiwee.task.Deadline;
+import Kiwee.task.Event;
+import Kiwee.task.Task;
+import Kiwee.task.Todo;
+
 import java.util.Scanner;
 
 public class Kiwee {
@@ -10,12 +19,12 @@ public class Kiwee {
     private static final String PARTITION = "____________________________________________________________";
 
     private static final String LOGO = PARTITION + "\n"
-            + " Hello! I'm Kiwee \uD83E\uDD5D \n"
+            + " Hello! I'm Kiwee.Kiwee \uD83E\uDD5D \n"
             + " How can I help you?\n"
             + PARTITION;
 
     private static final String BYE_MESSAGE = PARTITION + "\n"
-            + " Bye \uD83D\uDC4B Kiwee hope to see you again soon!\n"
+            + " Bye \uD83D\uDC4B Kiwee.Kiwee hope to see you again soon!\n"
             + PARTITION;
 
     private static void printTask() {
