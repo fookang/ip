@@ -7,14 +7,12 @@ import Kiwee.task.Event;
 import Kiwee.task.Task;
 import Kiwee.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Kiwee {
-    private static final int CAPACITY = 100;
 
-    private static final Task[] tasks = new Task[CAPACITY];
-
-    private static int size = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     private static final String PARTITION = "____________________________________________________________";
 
@@ -29,16 +27,16 @@ public class Kiwee {
 
     private static void printTask() {
         System.out.println(PARTITION);
-        for (int i = 0; i < size; i++) {
-            System.out.println(i + 1 + "." + tasks[i].toString());
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(i + 1 + "." + tasks.get(i));
         }
         System.out.println(PARTITION);
     }
 
     private static void printAddMessage(Task task) {
         System.out.println(PARTITION);
-        System.out.println(" Added: " + task.toString());
-        System.out.println("You have " + size + " tasks in your list");
+        System.out.println(" Added: " + task);
+        System.out.println("You have " + tasks.size() + " tasks in your list");
         System.out.println(PARTITION);
     }
 
@@ -50,31 +48,28 @@ public class Kiwee {
             throw new KiweeException("Invalid ID");
         }
 
-        if (id < 1 || id > size) {
+        if (id < 1 || id > tasks.size()) {
             throw new KiweeException("Invalid ID");
         }
 
         if (command.equals("mark")) {
-            tasks[id - 1].markAsDone();
+            tasks.get(id - 1).markAsDone();
             System.out.println(PARTITION);
             System.out.println(" Well done! I have marked this as done!");
         } else {
-            tasks[id - 1].markAsUndone();
+            tasks.get(id - 1).markAsUndone();
             System.out.println(PARTITION);
             System.out.println(" OK, I've marked this as not done yet");
         }
 
-        System.out.println(tasks[id - 1].toString());
+        System.out.println(tasks.get(id - 1));
         System.out.println(PARTITION);
     }
 
     private static void addTodo(String description) throws KiweeException {
-        if (size < CAPACITY) {
-            tasks[size++] = new Todo(description);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
-        }
+        Todo todo = new Todo(description);
+        tasks.add(todo);
+        printAddMessage(todo);
     }
 
     private static void addDeadline(String input) throws KiweeException {
@@ -84,12 +79,10 @@ public class Kiwee {
         }
         String description = words[0].trim();
         String by = words[1].trim();
-        if (size < CAPACITY) {
-            tasks[size++] = new Deadline(description, by);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
-        }
+
+        Deadline deadline = new Deadline(description, by);
+        tasks.add(deadline);
+        printAddMessage(deadline);
     }
 
     private static void addEvent(String input) throws KiweeException {
@@ -109,12 +102,10 @@ public class Kiwee {
         String from = details[0].trim();
         String to = details[1].trim();
 
-        if (size < CAPACITY) {
-            tasks[size++] = new Event(description, from, to);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
-        }
+        Event event = new Event(description, from, to);
+        tasks.add(event);
+        printAddMessage(event);
+
     }
 
     private static void printError() {
