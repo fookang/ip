@@ -1,6 +1,6 @@
 package Kiwee.task;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -29,4 +29,6 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
+
+    public abstract String toStorageString();
 }
