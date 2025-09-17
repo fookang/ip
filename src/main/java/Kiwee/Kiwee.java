@@ -7,16 +7,18 @@ import Kiwee.task.Event;
 import Kiwee.task.Task;
 import Kiwee.task.Todo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Kiwee {
-    private static final int CAPACITY = 100;
 
-    private static final Task[] tasks = new Task[CAPACITY];
-
-    private static int size = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     private static final String PARTITION = "____________________________________________________________";
+
+    private static void printLine() {
+        System.out.println(PARTITION);
+    }
 
     private static final String LOGO = PARTITION + "\n"
             + " Hello! I'm Kiwee.Kiwee \uD83E\uDD5D \n"
@@ -27,72 +29,70 @@ public class Kiwee {
             + " Bye \uD83D\uDC4B Kiwee.Kiwee hope to see you again soon!\n"
             + PARTITION;
 
-    private static void printTask() {
-        System.out.println(PARTITION);
-        for (int i = 0; i < size; i++) {
-            System.out.println(i + 1 + "." + tasks[i].toString());
+    private static void printTask() throws KiweeException {
+        printLine();
+        if (tasks.isEmpty()) {
+            System.out.println(" Your list is empty. Add tasks with: todo | deadline | event");
         }
-        System.out.println(PARTITION);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(i + 1 + "." + tasks.get(i));
+        }
+        printLine();
     }
 
     private static void printAddMessage(Task task) {
-        System.out.println(PARTITION);
-        System.out.println(" Added: " + task.toString());
-        System.out.println("You have " + size + " tasks in your list");
-        System.out.println(PARTITION);
+        printLine();
+        System.out.println(" Added: " + task);
+        System.out.println("You have " + tasks.size() + " tasks in your list");
+        printLine();
     }
 
     private static void handleCompletionCommand(String command, String variable) throws KiweeException {
-        int id;
-        try {
-            id = Integer.parseInt(variable);
-        } catch (NumberFormatException e) {
-            throw new KiweeException("Invalid ID");
-        }
-
-        if (id < 1 || id > size) {
-            throw new KiweeException("Invalid ID");
-        }
+        int id = getId(variable);
 
         if (command.equals("mark")) {
-            tasks[id - 1].markAsDone();
-            System.out.println(PARTITION);
+            tasks.get(id - 1).markAsDone();
+            printLine();
             System.out.println(" Well done! I have marked this as done!");
         } else {
-            tasks[id - 1].markAsUndone();
-            System.out.println(PARTITION);
+            tasks.get(id - 1).markAsUndone();
+            printLine();
             System.out.println(" OK, I've marked this as not done yet");
         }
 
-        System.out.println(tasks[id - 1].toString());
-        System.out.println(PARTITION);
+        System.out.println(tasks.get(id - 1));
+        printLine();
     }
 
     private static void addTodo(String description) throws KiweeException {
-        if (size < CAPACITY) {
-            tasks[size++] = new Todo(description);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
+        if (description.isEmpty()) {
+            throw new KiweeCommandException("Input is empty");
         }
+        Todo todo = new Todo(description);
+        tasks.add(todo);
+        printAddMessage(todo);
     }
 
     private static void addDeadline(String input) throws KiweeException {
+        if (input.isEmpty()) {
+            throw new KiweeCommandException("input is empty");
+        }
         String[] words = input.split("/by", 2);
         if (words.length <= 1) {
             throw new KiweeCommandException("Invalid command");
         }
         String description = words[0].trim();
         String by = words[1].trim();
-        if (size < CAPACITY) {
-            tasks[size++] = new Deadline(description, by);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
-        }
+
+        Deadline deadline = new Deadline(description, by);
+        tasks.add(deadline);
+        printAddMessage(deadline);
     }
 
     private static void addEvent(String input) throws KiweeException {
+        if (input.isEmpty()) {
+            throw new KiweeCommandException("input is empty");
+        }
         String[] words = input.split("/from", 2);
         if (words.length <= 1) {
             throw new KiweeCommandException("Invalid command");
@@ -109,12 +109,32 @@ public class Kiwee {
         String from = details[0].trim();
         String to = details[1].trim();
 
-        if (size < CAPACITY) {
-            tasks[size++] = new Event(description, from, to);
-            printAddMessage(tasks[size - 1]);
-        } else {
-            throw new KiweeException("Capacity of 100 is reached");
+        Event event = new Event(description, from, to);
+        tasks.add(event);
+        printAddMessage(event);
+    }
+
+    private static void deleteTask(String variable) throws KiweeException {
+        int id = getId(variable);
+        Task remove = tasks.remove(id - 1);
+        printLine();
+        System.out.println("OK. I have deleted this task: \n " + remove);
+        System.out.println("You have " + tasks.size() + " tasks in your list");
+        printLine();
+    }
+
+    private static int getId(String variable) throws KiweeException {
+        int id;
+        try {
+            id = Integer.parseInt(variable);
+        } catch (NumberFormatException e) {
+            throw new KiweeException("Invalid ID");
         }
+
+        if (id < 1 || id > tasks.size()) {
+            throw new KiweeException("Invalid ID");
+        }
+        return id;
     }
 
     private static void printError() {
@@ -171,18 +191,22 @@ public class Kiwee {
                     addEvent(rest);
                     break;
 
+                case "delete":
+                    deleteTask(rest);
+                    break;
+
                 default:
                     throw new KiweeCommandException(command + " is not a valid command");
                 }
             } catch (KiweeCommandException e) {
-                System.out.println(PARTITION);
+                printLine();
                 System.out.println(" " + e.getMessage());
                 printError();
-                System.out.println(PARTITION);
+                printLine();
             } catch (KiweeException e) {
-                System.out.println(PARTITION);
+                printLine();
                 System.out.println(" " + e.getMessage());
-                System.out.println(PARTITION);
+                printLine();
             }
         }
     }
