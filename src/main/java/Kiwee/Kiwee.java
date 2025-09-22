@@ -6,105 +6,20 @@ import Kiwee.task.Deadline;
 import Kiwee.task.Event;
 import Kiwee.task.Task;
 import Kiwee.task.Todo;
+import Kiwee.utils.DataManager;
 
 import java.util.ArrayList;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 
 public class Kiwee {
 
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks;
 
     private final static String FILEPATH = "./data/Kiwee.txt";
 
-    private static Task parseData(String line) throws KiweeException {
-        String[] word = line.split("\\|");
-        if (word.length < 3) {
-            throw new KiweeException("Corrupted line");
-        }
-        switch (word[0].trim()) {
-        case "T":
-            Task todo = new Todo(word[2].trim());
-            if (word[1].trim().equals("1")) {
-                todo.markAsDone();
-            }
-            return todo;
-
-        case "D":
-            if (word.length != 4) {
-                throw new KiweeException("Invalid line " + line);
-            }
-            Task deadline = new Deadline(word[2].trim(), word[3].trim());
-            if (word[1].trim().equals("1")) {
-                deadline.markAsDone();
-            }
-            return deadline;
     private static final String SPACE = "    ";
 
-        case "E":
-            if (word.length != 5) {
-                throw new KiweeException("Invalid event line " + line);
-            }
-            Task event = new Event(word[2].trim(), word[3].trim(), word[4].trim());
-            if (word[1].trim().equals("1")) {
-                event.markAsDone();
-            }
-            return event;
-
-        default:
-            throw new KiweeException("Invalid task type: " + word[0]);
-        }
-    }
-
-    private static ArrayList<Task> loadTask() {
-        ArrayList<Task> task = new ArrayList<>();
-        File file = new File(FILEPATH);
-        try (Scanner s = new Scanner(file)) {
-            while (s.hasNextLine()) {
-                String line = s.nextLine();
-                try {
-                    Task parsed = parseData(line);
-                    task.add(parsed);
-                } catch (KiweeException e) {
-                    System.err.println("Skipping corrupt line " + line);
-                }
-
-            }
-        } catch (FileNotFoundException e) {
-            return task;
-        }
-        return task;
-    }
-
-    private static void saveTask() throws IOException {
-        try (FileWriter fw = new FileWriter(FILEPATH, false)) {
-            for (Task task : tasks) {
-                fw.write(task.toStorageString());
-                fw.write(System.lineSeparator());
-            }
-        }
-    }
-
-    private static void save() {
-        try {
-            File file = new File(FILEPATH);
-            File parent = file.getParentFile();
-
-            if (parent != null && !parent.exists() && !parent.mkdirs()) {
-                System.err.println("Warning: Could not create directory " + parent.getAbsolutePath());
-            }
-
-            saveTask();
-
-        } catch (IOException e) {
-            System.err.println("Error saving file: " + e.getMessage());
-        }
-    }
     private static final String PARTITION = SPACE + "____________________________________________________________";
 
     private static final String KIWEELOGO = """
@@ -252,7 +167,9 @@ public class Kiwee {
     public static void main(String[] args) {
         System.out.println(LOGO);
 
-        tasks = loadTask();
+        // Load data or create new List
+        DataManager data = new DataManager(FILEPATH);
+        tasks = data.loadTask();
 
         Scanner input = new Scanner(System.in);
 
@@ -271,7 +188,7 @@ public class Kiwee {
                 switch (command) {
                 case "bye":
                     System.out.println(BYE_MESSAGE);
-                    save();
+                    data.save(tasks);
                     return;
 
                 case "list":
@@ -304,13 +221,11 @@ public class Kiwee {
                 }
             } catch (KiweeCommandException e) {
                 printLine();
-                System.out.println(" " + e.getMessage());
                 System.out.println(SPACE + e.getMessage());
                 printError();
                 printLine();
             } catch (KiweeException e) {
                 printLine();
-                System.out.println(" " + e.getMessage());
                 System.out.println(SPACE + e.getMessage());
                 printLine();
             }
