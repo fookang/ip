@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private static final String SPACE = "    ";
+    public static final String SPACE = "    ";
 
     private static final String PARTITION = SPACE + "____________________________________________________________";
 
