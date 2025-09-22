@@ -44,6 +44,7 @@ public class Kiwee {
                 deadline.markAsDone();
             }
             return deadline;
+    private static final String SPACE = "    ";
 
         case "E":
             if (word.length != 5) {
@@ -104,20 +105,29 @@ public class Kiwee {
             System.err.println("Error saving file: " + e.getMessage());
         }
     }
+    private static final String PARTITION = SPACE + "____________________________________________________________";
 
-    private static final String PARTITION = "____________________________________________________________";
+    private static final String KIWEELOGO = """
+             _  __ ___ __        __ _____  _____ 
+            | |/ /|_ _|\\ \\      / /| ____|| ____|
+            | ' /  | |  \\ \\ /\\ / / |  _|  |  _|  
+            | . \\  | |   \\ V  V /  | |___ | |___ 
+            |_|\\_\\|___|   \\_/\\_/   |_____| |_____|
+            
+            """.replaceAll("(?m)^", SPACE);
 
     private static void printLine() {
         System.out.println(PARTITION);
     }
 
     private static final String LOGO = PARTITION + "\n"
-            + " Hello! I'm Kiwee.Kiwee \uD83E\uDD5D \n"
-            + " How can I help you?\n"
+            + KIWEELOGO
+            + SPACE + "Hello! I'm Kiwee \n"
+            + SPACE + "How can I help you?\n"
             + PARTITION;
 
     private static final String BYE_MESSAGE = PARTITION + "\n"
-            + " Bye \uD83D\uDC4B Kiwee.Kiwee hope to see you again soon!\n"
+            + SPACE + "Bye \uD83D\uDC4B Kiwee.Kiwee hope to see you again soon!\n"
             + PARTITION;
 
     private static void printTask() throws KiweeException {
@@ -126,15 +136,15 @@ public class Kiwee {
             System.out.println(" Your list is empty. Add tasks with: todo | deadline | event");
         }
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(i + 1 + "." + tasks.get(i));
+            System.out.println(SPACE + i + 1 + "." + tasks.get(i));
         }
         printLine();
     }
 
     private static void printAddMessage(Task task) {
         printLine();
-        System.out.println(" Added: " + task);
-        System.out.println("You have " + tasks.size() + " tasks in your list");
+        System.out.println(SPACE + "Added: " + task);
+        System.out.println(SPACE + "You have " + tasks.size() + " tasks in your list");
         printLine();
     }
 
@@ -144,14 +154,14 @@ public class Kiwee {
         if (command.equals("mark")) {
             tasks.get(id - 1).markAsDone();
             printLine();
-            System.out.println(" Well done! I have marked this as done!");
+            System.out.println(SPACE + "Well done! I have marked this as done!");
         } else {
             tasks.get(id - 1).markAsUndone();
             printLine();
-            System.out.println(" OK, I've marked this as not done yet");
+            System.out.println(SPACE + "OK, I've marked this as not done yet");
         }
 
-        System.out.println(tasks.get(id - 1));
+        System.out.println(SPACE + tasks.get(id - 1));
         printLine();
     }
 
@@ -209,8 +219,8 @@ public class Kiwee {
         int id = getId(variable);
         Task remove = tasks.remove(id - 1);
         printLine();
-        System.out.println("OK. I have deleted this task: \n " + remove);
-        System.out.println("You have " + tasks.size() + " tasks in your list");
+        System.out.println(SPACE + "OK. I have deleted this task: \n " + remove);
+        System.out.println(SPACE + "You have " + tasks.size() + " tasks in your list");
         printLine();
     }
 
@@ -230,13 +240,13 @@ public class Kiwee {
 
     private static void printError() {
         System.out.print("""
-                 Input valid command
-                 To add todo:       todo <description>
-                 To add deadline:   deadline <description> /by <when>
-                 To add event:      event <description> /from <start> /to <end>
-                 Mark / Unmark:     mark <id> | unmark <id>
-                 Other:             list | bye
-                """);
+                Input valid command
+                To add todo:       todo <description>
+                To add deadline:   deadline <description> /by <when>
+                To add event:      event <description> /from <start> /to <end>
+                Mark / Unmark:     mark <id> | unmark <id>
+                Other:             list | bye
+                """.replaceAll("(?m)^", SPACE));
     }
 
     public static void main(String[] args) {
@@ -295,11 +305,13 @@ public class Kiwee {
             } catch (KiweeCommandException e) {
                 printLine();
                 System.out.println(" " + e.getMessage());
+                System.out.println(SPACE + e.getMessage());
                 printError();
                 printLine();
             } catch (KiweeException e) {
                 printLine();
                 System.out.println(" " + e.getMessage());
+                System.out.println(SPACE + e.getMessage());
                 printLine();
             }
         }
