@@ -8,9 +8,6 @@ import Kiwee.utils.Storage;
 import Kiwee.utils.KiweeTaskList;
 import Kiwee.utils.Ui;
 
-import java.util.Scanner;
-
-
 public class Kiwee {
 
     private final static String FILEPATH = "./data/Kiwee.txt";
@@ -44,7 +41,7 @@ public class Kiwee {
                 Ui.printCommandError(e.getMessage());
 
             } catch (KiweeException e) {
-                Ui.printError(e.getMessage());
+                Ui.printMessage(e.getMessage());
             }
         }
     }

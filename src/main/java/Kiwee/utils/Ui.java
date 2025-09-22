@@ -42,6 +42,12 @@ public class Ui {
         System.out.println(PARTITION);
     }
 
+    public static void printMessage(String string) {
+        printLine();
+        System.out.println(SPACE + string);
+        printLine();
+    }
+
     public String readCommand() {
         Scanner input = new Scanner(System.in);
         return input.nextLine().trim();
@@ -101,12 +107,6 @@ public class Ui {
         printLine();
         System.out.println(SPACE + message);
         printCommand();
-        printLine();
-    }
-
-    public static void printError(String message) {
-        printLine();
-        System.out.println(SPACE + message);
         printLine();
     }
 }
