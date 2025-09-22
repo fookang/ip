@@ -1,5 +1,15 @@
 package Kiwee.utils;
 
+import Kiwee.command.AddDeadlineCommand;
+import Kiwee.command.AddEventCommand;
+import Kiwee.command.AddTodoCommand;
+import Kiwee.command.ByeCommand;
+import Kiwee.command.Command;
+import Kiwee.command.DeleteCommand;
+import Kiwee.command.ListCommand;
+import Kiwee.command.MarkCommand;
+import Kiwee.command.UnmarkCommand;
+import Kiwee.exception.KiweeCommandException;
 import Kiwee.exception.KiweeException;
 import Kiwee.task.Deadline;
 import Kiwee.task.Event;
@@ -43,5 +53,39 @@ public class Parser {
         default:
             throw new KiweeException("Invalid task type: " + word[0]);
         }
+    }
+
+    private static int getId(String variable, KiweeTaskList tasks) throws KiweeException {
+        int id;
+        try {
+            id = Integer.parseInt(variable);
+        } catch (NumberFormatException e) {
+            throw new KiweeException("Invalid ID");
+        }
+
+        if (id < 1 || id > tasks.size()) {
+            throw new KiweeException("Invalid ID");
+        }
+        return id;
+    }
+
+    public static Command parseCommand(String userInput, KiweeTaskList tasks) throws KiweeException {
+        String[] words = userInput.split("\\s+", 2);
+        String command = words[0].toLowerCase();
+        String rest = words.length > 1 ? words[1] : "";
+
+        return switch (command) {
+            case "bye" -> new ByeCommand();
+            case "list" -> new ListCommand();
+            case "mark" -> new MarkCommand(getId(rest, tasks));
+            case "unmark" -> new UnmarkCommand(getId(rest, tasks));
+            case "todo" -> new AddTodoCommand(rest);
+            case "deadline" -> new AddDeadlineCommand(rest);
+            case "event" -> new AddEventCommand(rest);
+            case "delete" -> new DeleteCommand(getId(rest, tasks));
+            default -> throw new KiweeCommandException(command + " is not a valid command");
+        };
+
+
     }
 }

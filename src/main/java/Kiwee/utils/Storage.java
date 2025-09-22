@@ -7,20 +7,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static Kiwee.utils.Parser.parseData;
 
-public class DataManager {
+public class Storage {
     private final File dataFile;
 
-    public DataManager(String filepath) {
+    public Storage(String filepath) {
         dataFile = new File(filepath);
     }
 
-    public ArrayList<Task> loadTask() {
-        ArrayList<Task> task = new ArrayList<>();
+    public KiweeTaskList loadTask() {
+        KiweeTaskList task = new KiweeTaskList();
         try (Scanner s = new Scanner(dataFile)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
@@ -38,7 +37,7 @@ public class DataManager {
         return task;
     }
 
-    private void saveTask(ArrayList<Task> tasks) throws IOException {
+    private void saveTask(KiweeTaskList tasks) throws IOException {
         try (FileWriter fw = new FileWriter(dataFile, false)) {
             for (Task task : tasks) {
                 fw.write(task.toStorageString());
@@ -47,7 +46,7 @@ public class DataManager {
         }
     }
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(KiweeTaskList tasks) {
         try {
             File parent = dataFile.getParentFile();
 
