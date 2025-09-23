@@ -1,6 +1,6 @@
 package Kiwee.command;
 
-import Kiwee.exception.KiweeCommandException;
+import Kiwee.exception.KiweeException;
 import Kiwee.task.Task;
 import Kiwee.task.Todo;
 
@@ -10,9 +10,9 @@ public class AddTodoCommand extends AddCommand {
     }
 
     @Override
-    protected Task buildTask() throws KiweeCommandException {
+    protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
-            throw new KiweeCommandException("Input is empty");
+            throw new KiweeException("That’s not a task, that’s silence. Say something!");
         }
         return new Todo(input);
     }

@@ -26,7 +26,7 @@ public class Dates {
 
     public static LocalDateTime parseDate(String date) throws KiweeException {
         if (date == null || date.isEmpty()) {
-            throw new KiweeException("Date cannot be empty");
+            throw new WrongDateFormatException();
         }
 
         for (String pattern : DATE_PATTERNS) {

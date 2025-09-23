@@ -21,6 +21,10 @@ public abstract class Task {
         this.isDone = true;
     }
 
+    public boolean isDone() {
+        return this.isDone;
+    }
+
     public void markAsUndone() {
         this.isDone = false;
     }

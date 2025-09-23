@@ -5,7 +5,7 @@ import Kiwee.utils.KiweeTaskList;
 import Kiwee.utils.Storage;
 import Kiwee.utils.Ui;
 
-public class FindCommand implements Command{
+public class FindCommand implements Command {
 
     private final String key;
 
@@ -19,7 +19,7 @@ public class FindCommand implements Command{
             Ui.printMessage("Kiwee don't know what to find without any input :(");
             return;
         }
-        KiweeTaskList matches = new  KiweeTaskList();
+        KiweeTaskList matches = new KiweeTaskList();
         for (Task task : tasks) {
             if (task.getDescription().contains(key)) {
                 matches.add(task);

@@ -1,7 +1,6 @@
 package Kiwee;
 
 import Kiwee.command.Command;
-import Kiwee.exception.KiweeCommandException;
 import Kiwee.exception.KiweeException;
 import Kiwee.utils.Parser;
 import Kiwee.utils.Storage;
@@ -36,9 +35,6 @@ public class Kiwee {
                 Command c = Parser.parseCommand(userInput, tasks);
                 c.execute(tasks, storage);
                 isExit = c.isExit();
-
-            } catch (KiweeCommandException e) {
-                Ui.printCommandError(e.getMessage());
 
             } catch (KiweeException e) {
                 Ui.printMessage(e.getMessage());

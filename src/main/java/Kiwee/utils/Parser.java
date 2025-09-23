@@ -10,6 +10,8 @@ import Kiwee.command.FindCommand;
 import Kiwee.command.ListCommand;
 import Kiwee.command.MarkCommand;
 import Kiwee.command.UnmarkCommand;
+import Kiwee.exception.CorruptedLineException;
+import Kiwee.exception.InvalidTaskException;
 import Kiwee.exception.KiweeCommandException;
 import Kiwee.exception.KiweeException;
 import Kiwee.task.Deadline;
@@ -24,7 +26,7 @@ public class Parser {
     public static Task parseData(String line) throws KiweeException {
         String[] word = line.split("\\|");
         if (word.length < 3) {
-            throw new KiweeException("Corrupted line");
+            throw new CorruptedLineException(line);
         }
         switch (word[0].trim()) {
         case "T":
@@ -36,7 +38,7 @@ public class Parser {
 
         case "D":
             if (word.length != 4) {
-                throw new KiweeException("Invalid line " + line);
+                throw new CorruptedLineException(line);
             }
             LocalDateTime time = Dates.parseDate(word[3].trim());
             Task deadline = new Deadline(word[2].trim(), time);
@@ -47,7 +49,7 @@ public class Parser {
 
         case "E":
             if (word.length != 5) {
-                throw new KiweeException("Invalid event line " + line);
+                throw new CorruptedLineException(line);
             }
             LocalDateTime from = Dates.parseDate(word[3].trim());
             LocalDateTime to = Dates.parseDate(word[4].trim());
@@ -58,7 +60,7 @@ public class Parser {
             return event;
 
         default:
-            throw new KiweeException("Invalid task type: " + word[0]);
+            throw new CorruptedLineException(line);
         }
     }
 
@@ -67,11 +69,11 @@ public class Parser {
         try {
             id = Integer.parseInt(variable);
         } catch (NumberFormatException e) {
-            throw new KiweeException("Invalid ID");
+            throw new KiweeCommandException("I wanted digits, not whatever '" + variable + "' is supposed to be.");
         }
 
         if (id < 1 || id > tasks.size()) {
-            throw new KiweeException("Invalid ID");
+            throw new InvalidTaskException(id);
         }
         return id;
     }
@@ -91,7 +93,8 @@ public class Parser {
             case "event" -> new AddEventCommand(rest);
             case "delete" -> new DeleteCommand(getId(rest, tasks));
             case "find" -> new FindCommand(rest);
-            default -> throw new KiweeCommandException(command + " is not a valid command");
+            default -> throw new KiweeCommandException("Congratulations, you invented a new command: '"
+                    + command + "'\n" + Ui.SPACE + "Too bad Kiwee doesn’t support it.");
         };
     }
 }
