@@ -17,7 +17,10 @@ import Kiwee.task.Event;
 import Kiwee.task.Task;
 import Kiwee.task.Todo;
 
+import java.time.LocalDateTime;
+
 public class Parser {
+
     public static Task parseData(String line) throws KiweeException {
         String[] word = line.split("\\|");
         if (word.length < 3) {
@@ -35,7 +38,8 @@ public class Parser {
             if (word.length != 4) {
                 throw new KiweeException("Invalid line " + line);
             }
-            Task deadline = new Deadline(word[2].trim(), word[3].trim());
+            LocalDateTime time = Dates.parseDate(word[3].trim());
+            Task deadline = new Deadline(word[2].trim(), time);
             if (word[1].trim().equals("1")) {
                 deadline.markAsDone();
             }
@@ -45,7 +49,9 @@ public class Parser {
             if (word.length != 5) {
                 throw new KiweeException("Invalid event line " + line);
             }
-            Task event = new Event(word[2].trim(), word[3].trim(), word[4].trim());
+            LocalDateTime from = Dates.parseDate(word[3].trim());
+            LocalDateTime to = Dates.parseDate(word[4].trim());
+            Task event = new Event(word[2].trim(), from, to);
             if (word[1].trim().equals("1")) {
                 event.markAsDone();
             }
@@ -87,7 +93,5 @@ public class Parser {
             case "find" -> new FindCommand(rest);
             default -> throw new KiweeCommandException(command + " is not a valid command");
         };
-
-
     }
 }
