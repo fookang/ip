@@ -1,16 +1,20 @@
 package Kiwee.task;
 
-public class Deadline extends Task {
-    protected String by;
+import Kiwee.utils.Dates;
 
-    public Deadline(String description, String by) {
+import java.time.LocalDateTime;
+
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + Dates.formatDate(this.by) + ")";
     }
 
     @Override
