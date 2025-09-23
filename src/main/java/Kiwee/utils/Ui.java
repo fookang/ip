@@ -42,22 +42,13 @@ public class Ui {
         System.out.println(PARTITION);
     }
 
-    public static void printMessage(String string) {
-        printLine();
-        System.out.println(SPACE + string);
-        printLine();
-    }
-
     public String readCommand() {
         Scanner input = new Scanner(System.in);
         return input.nextLine().trim();
     }
 
-    public static void printTask(String header, KiweeTaskList tasks) {
+    public static void printTask(KiweeTaskList tasks) throws KiweeException {
         printLine();
-        if (header != null && !header.isEmpty()) {
-            System.out.println(SPACE + header);
-        }
         if (tasks.isEmpty()) {
             System.out.println("Your list is empty. Add tasks with: todo | deadline | event");
         }
@@ -65,10 +56,6 @@ public class Ui {
             System.out.println(Ui.SPACE + (i + 1) + "." + tasks.get(i));
         }
         printLine();
-    }
-
-    public static void printTask(KiweeTaskList tasks){
-        printTask(null, tasks);
     }
 
     public static void printTaskAdded(Task task, int count) {
@@ -114,6 +101,12 @@ public class Ui {
         printLine();
         System.out.println(SPACE + message);
         printCommand();
+        printLine();
+    }
+
+    public static void printError(String message) {
+        printLine();
+        System.out.println(SPACE + message);
         printLine();
     }
 }

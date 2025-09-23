@@ -6,7 +6,6 @@ import Kiwee.command.AddTodoCommand;
 import Kiwee.command.ByeCommand;
 import Kiwee.command.Command;
 import Kiwee.command.DeleteCommand;
-import Kiwee.command.FindCommand;
 import Kiwee.command.ListCommand;
 import Kiwee.command.MarkCommand;
 import Kiwee.command.UnmarkCommand;
@@ -90,7 +89,6 @@ public class Parser {
             case "deadline" -> new AddDeadlineCommand(rest);
             case "event" -> new AddEventCommand(rest);
             case "delete" -> new DeleteCommand(getId(rest, tasks));
-            case "find" -> new FindCommand(rest);
             default -> throw new KiweeCommandException(command + " is not a valid command");
         };
     }

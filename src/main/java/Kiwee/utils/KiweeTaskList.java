@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class KiweeTaskList implements Iterable<Task> {
-    private final ArrayList<Task> tasks = new ArrayList<>();
+    private static final ArrayList<Task> tasks = new ArrayList<>();
 
     public void add(Task t) {
         tasks.add(t);
