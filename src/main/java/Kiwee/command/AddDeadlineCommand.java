@@ -8,11 +8,27 @@ import Kiwee.utils.Dates;
 
 import java.time.LocalDateTime;
 
+/**
+ * Command for adding a deadline task to the task list.
+ */
 public class AddDeadlineCommand extends AddCommand {
+    /**
+     * Creates a new AddDeadlineCommand with the specified user input.
+     *
+     * @param input The user input containing the deadline description and due date
+     */
     public AddDeadlineCommand(String input) {
         super(input);
     }
 
+    /**
+     * Builds a Deadline task from the user input.
+     * Parses the input to extract the description and due date, then creates a new Deadline task.
+     *
+     * @return A new Deadline task
+     * @throws KiweeException        If the input is empty
+     * @throws KiweeCommandException If required keyword "/by" is missing, description is empty, or due date is empty
+     */
     @Override
     protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
@@ -38,6 +54,11 @@ public class AddDeadlineCommand extends AddCommand {
         return new Deadline(description, by);
     }
 
+    /**
+     * Indicates whether this command should exit the application.
+     *
+     * @return false, as adding a deadline does not exit the application
+     */
     @Override
     public boolean isExit() {
         return false;

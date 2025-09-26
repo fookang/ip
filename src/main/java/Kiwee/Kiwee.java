@@ -7,6 +7,9 @@ import Kiwee.utils.Storage;
 import Kiwee.utils.KiweeTaskList;
 import Kiwee.utils.Ui;
 
+/**
+ * Main application class for the Kiwee task management system.
+ */
 public class Kiwee {
 
     private final static String FILEPATH = "./data/Kiwee.txt";
@@ -14,6 +17,11 @@ public class Kiwee {
     private final KiweeTaskList tasks;
     private final Ui ui;
 
+    /**
+     * Creates a new Kiwee application instance.
+     * 
+     * @param filepath The file path for data storage
+     */
     public Kiwee(String filepath) {
         // Load data or create new List
         storage = new Storage(FILEPATH);
@@ -21,6 +29,9 @@ public class Kiwee {
         ui = new Ui();
     }
 
+    /**
+     * Starts the main application loop.
+     */
     public void run() {
         Ui.WELCOME_MESSAGE();
         boolean isExit = false;
@@ -42,6 +53,12 @@ public class Kiwee {
         }
     }
 
+    /**
+     * Main entry point for the Kiwee application.
+     * 
+     * @param args Command line arguments
+     * @throws KiweeException If any method fails
+     */
     public static void main(String[] args) throws KiweeException {
         new Kiwee(FILEPATH).run();
     }

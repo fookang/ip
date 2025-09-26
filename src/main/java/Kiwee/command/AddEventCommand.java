@@ -9,11 +9,28 @@ import Kiwee.utils.Dates;
 
 import java.time.LocalDateTime;
 
+/**
+ * Command for adding an event task to the task list.
+ */
 public class AddEventCommand extends AddCommand {
+
+    /**
+     * Creates a new AddEventCommand with the specified user input.
+     *
+     * @param input The user input containing the event description, start date and end date
+     */
     public AddEventCommand(String input) {
         super(input);
     }
 
+    /**
+     * Builds an Event task from the user input.
+     *
+     * @return A new Event task
+     * @throws KiweeException          If the input is empty
+     * @throws KiweeCommandException   If required keywords "/from", "/to" or description are missing
+     * @throws EndBeforeStartException If the end time is before the start time
+     */
     @Override
     protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
@@ -54,6 +71,11 @@ public class AddEventCommand extends AddCommand {
 
     }
 
+    /**
+     * Indicates whether this command should exit the application.
+     *
+     * @return false, as adding an event does not exit the application
+     */
     @Override
     public boolean isExit() {
         return false;
