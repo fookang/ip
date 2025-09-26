@@ -9,6 +9,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Utility class for parsing and formatting dates.
+ */
 public class Dates {
 
     private static final String[] DATE_PATTERNS = {
@@ -24,6 +27,14 @@ public class Dates {
             "HH:mm", "HHmm", "h:mma"
     };
 
+    /**
+     * Parses a date string into a LocalDateTime object.
+     * For time-only input, uses today's date.
+     *
+     * @param date The date string to parse
+     * @return A LocalDateTime object representing the parsed date
+     * @throws WrongDateFormatException If the date format is not recognized
+     */
     public static LocalDateTime parseDate(String date) throws KiweeException {
         if (date == null || date.isEmpty()) {
             throw new WrongDateFormatException();
@@ -59,6 +70,12 @@ public class Dates {
         throw new WrongDateFormatException();
     }
 
+    /**
+     * Formats a LocalDateTime object into a readable date string.
+     *
+     * @param date The LocalDateTime to format
+     * @return A formatted date string in "MMM dd yyyy, h:mma" format
+     */
     public static String formatDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
         return date.format(formatter);

@@ -21,8 +21,19 @@ import Kiwee.task.Todo;
 
 import java.time.LocalDateTime;
 
+/**
+ * Utility class for parsing user input and data from storage files.
+ * Converts strings into command objects and task objects.
+ */
 public class Parser {
 
+    /**
+     * Parses a data string from storage file into a Task object.
+     *
+     * @param line The data string to parse from storage
+     * @return A Task object representing the parsed data
+     * @throws CorruptedLineException If the data string format is invalid
+     */
     public static Task parseData(String line) throws KiweeException {
         String[] word = line.split("\\|");
         if (word.length < 3) {
@@ -64,6 +75,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a user-inputted ID string into an integer.
+     *
+     * @param variable The user-inputted ID string
+     * @param tasks    The task list to validate the ID against
+     * @return The parsed and validated task ID
+     * @throws KiweeCommandException If the input is not a valid integer
+     * @throws InvalidTaskException  If the ID is out of range
+     */
     private static int getId(String variable, KiweeTaskList tasks) throws KiweeException {
         int id;
         try {
@@ -78,6 +98,15 @@ public class Parser {
         return id;
     }
 
+    /**
+     * Parses user input into a Command object.
+     *
+     * @param userInput The user-inputted command string
+     * @param tasks     The task list needed for commands
+     * @return A Command object that can execute the user's request
+     * @throws KiweeCommandException If the command is not recognized
+     * @throws InvalidTaskException  If a task ID is invalid
+     */
     public static Command parseCommand(String userInput, KiweeTaskList tasks) throws KiweeException {
         String[] words = userInput.split("\\s+", 2);
         String command = words[0].toLowerCase();

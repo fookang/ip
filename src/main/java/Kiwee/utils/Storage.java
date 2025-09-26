@@ -11,13 +11,26 @@ import java.util.Scanner;
 
 import static Kiwee.utils.Parser.parseData;
 
+/**
+ * Handles loading and saving tasks to a data file.
+ */
 public class Storage {
     private final File dataFile;
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     *
+     * @param filepath The path to the data file
+     */
     public Storage(String filepath) {
         dataFile = new File(filepath);
     }
 
+    /**
+     * Loads tasks from the data file into a task list.
+     *
+     * @return A KiweeTaskList containing all valid tasks from the file
+     */
     public KiweeTaskList loadTask() {
         KiweeTaskList task = new KiweeTaskList();
         try (Scanner s = new Scanner(dataFile)) {
@@ -37,6 +50,12 @@ public class Storage {
         return task;
     }
 
+    /**
+     * Saves the task list to the data file.
+     *
+     * @param tasks The task list to save
+     * @throws IOException If writing to the file fails
+     */
     private void saveTask(KiweeTaskList tasks) throws IOException {
         try (FileWriter fw = new FileWriter(dataFile, false)) {
             for (Task task : tasks) {
@@ -46,12 +65,18 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the task list to the data file.
+     *
+     * @param tasks The task list to save
+     */
     public void save(KiweeTaskList tasks) {
         try {
             File parent = dataFile.getParentFile();
 
             if (parent != null && !parent.exists() && !parent.mkdirs()) {
                 System.err.println("Warning: Could not create directory " + parent.getAbsolutePath());
+                return;
             }
 
             saveTask(tasks);
