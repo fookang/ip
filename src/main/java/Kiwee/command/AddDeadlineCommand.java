@@ -21,17 +21,17 @@ public class AddDeadlineCommand extends AddCommand {
 
         String[] words = input.split("/by", 2);
         if (words.length < 2) {
-            throw new KiweeException("Missing '/by' — deadlines need dates, not vibes.");
+            throw new KiweeCommandException("Missing '/by' — deadlines need dates, not vibes.");
         }
 
         String description = words[0].trim();
         if (description.isEmpty()) {
-            throw new KiweeException("Describe the task, please. Kiwee can’t read minds (yet).");
+            throw new KiweeCommandException("Describe the task, please. Kiwee can’t read minds (yet).");
         }
 
         String byStr = words[1].trim();
         if (byStr.isEmpty()) {
-            throw new KiweeException("When is it due? Stop procrastinating!!");
+            throw new KiweeCommandException("When is it due? Stop procrastinating!!");
         }
 
         LocalDateTime by = Dates.parseDate(words[1].trim());
