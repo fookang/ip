@@ -1,7 +1,3 @@
----
-layout: default
----
-
 # Kiwee User Guide
 
 Kiwee is a **command-line task management application** that helps you organize your tasks efficiently.
