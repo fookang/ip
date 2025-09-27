@@ -15,6 +15,6 @@ public class AlreadyMarkedException extends KiweeException {
      * @param task The task that was already marked as done
      */
     public AlreadyMarkedException(Task task) {
-        super("You’ve completed this task… again. Want a medal? \n" + Ui.SPACE + task);
+        super("You've completed this task... again. Want a medal? \n" + Ui.SPACE + task);
     }
 }

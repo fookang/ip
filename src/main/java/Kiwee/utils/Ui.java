@@ -31,7 +31,7 @@ public class Ui {
             + PARTITION;
 
     private static final String BYE_MESSAGE = PARTITION + "\n"
-            + SPACE + "Bye \uD83D\uDC4B Kiwee hopes you’re leaving to actually finish your\n"
+            + SPACE + "Bye! Kiwee hopes you're leaving to actually finish your\n"
             + SPACE + "tasks, not procrastinate harder.\n"
             + PARTITION;
 
@@ -88,7 +88,7 @@ public class Ui {
             System.out.println(SPACE + header);
         }
         if (tasks.isEmpty()) {
-            System.out.println("Wow… so productive. Zero tasks.");
+            System.out.println("Wow... so productive. Zero tasks.");
         }
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(Ui.SPACE + (i + 1) + "." + tasks.get(i));
@@ -113,7 +113,7 @@ public class Ui {
      */
     public static void printTaskAdded(Task task, int count) {
         printLine();
-        System.out.println(SPACE + "Another one? Fine… I’ve added this task:");
+        System.out.println(SPACE + "Another one? Fine... I've added this task:");
         System.out.println(SPACE + "Added: " + task);
         System.out.println(SPACE + "Your list now has " + count + " tasks. Good luck surviving that.");
         printLine();

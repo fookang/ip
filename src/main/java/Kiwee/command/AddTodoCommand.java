@@ -27,7 +27,7 @@ public class AddTodoCommand extends AddCommand {
     @Override
     protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
-            throw new KiweeException("That’s not a task, that’s silence. Say something!");
+            throw new KiweeException("That's not a task, that's silence. Say something!");
         }
         return new Todo(input);
     }

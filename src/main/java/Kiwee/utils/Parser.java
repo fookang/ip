@@ -123,7 +123,7 @@ public class Parser {
             case "delete" -> new DeleteCommand(getId(rest, tasks));
             case "find" -> new FindCommand(rest);
             default -> throw new KiweeCommandException("Congratulations, you invented a new command: '"
-                    + command + "'\n" + Ui.SPACE + "Too bad Kiwee doesn’t support it.");
+                    + command + "'\n" + Ui.SPACE + "Too bad Kiwee doesn't support it.");
         };
     }
 }

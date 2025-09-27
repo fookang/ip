@@ -15,6 +15,6 @@ public class AlreadyUnmarkedException extends KiweeException {
      * @param task The task that was already marked as not done
      */
     public AlreadyUnmarkedException(Task task) {
-        super("Pro gamer move detected — unmarking what was never marked. \n" + Ui.SPACE + task);
+        super("Pro gamer move detected - unmarking what was never marked. \n" + Ui.SPACE + task);
     }
 }

@@ -15,6 +15,6 @@ public class InvalidTaskException extends KiweeException {
      */
     public InvalidTaskException(int index) {
         super("Task #" + index + " does not exist \n" + Ui.SPACE +
-                "Kiwee suggests counting again… slowly.");
+                "Kiwee suggests counting again... slowly.");
     }
 }

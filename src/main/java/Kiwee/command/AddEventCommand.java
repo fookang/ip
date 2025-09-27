@@ -34,11 +34,11 @@ public class AddEventCommand extends AddCommand {
     @Override
     protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
-            throw new KiweeException("That’s not an event, that’s silence. Say something!");
+            throw new KiweeException("That's not an event, that's silence. Say something!");
         }
         String[] words = input.split("/from", 2);
         if (words.length < 2) {
-            throw new KiweeCommandException("Missing '/from' — Kiwee can’t guess when your event starts (yet).");
+            throw new KiweeCommandException("Missing '/from' - Kiwee can't guess when your event starts (yet).");
         }
 
         String description = words[0].trim();
@@ -50,14 +50,14 @@ public class AddEventCommand extends AddCommand {
         String[] details = time.split("/to", 2);
 
         if (details.length < 2) {
-            throw new KiweeCommandException("Missing '/to' — Is this event endless????");
+            throw new KiweeCommandException("Missing '/to' - Is this event endless????");
         }
 
         String fromStr = details[0].trim();
         String toStr = details[1].trim();
 
         if (fromStr.isEmpty() || toStr.isEmpty()) {
-            throw new KiweeCommandException("Both start and end must be provided. Time travel isn’t supported yet.");
+            throw new KiweeCommandException("Both start and end must be provided. Time travel isn't supported yet.");
         }
 
         LocalDateTime from = Dates.parseDate(fromStr.trim());

@@ -32,12 +32,12 @@ public class AddDeadlineCommand extends AddCommand {
     @Override
     protected Task buildTask() throws KiweeException {
         if (input.isEmpty()) {
-            throw new KiweeException("That’s not a deadline, that’s silence. Say something!");
+            throw new KiweeException("That's not a deadline, that's silence. Say something!");
         }
 
         String[] words = input.split("/by", 2);
         if (words.length < 2) {
-            throw new KiweeCommandException("Missing '/by' — deadlines need dates, not vibes.");
+            throw new KiweeCommandException("Missing '/by' - deadlines need dates, not vibes.");
         }
 
         String description = words[0].trim();
