@@ -88,7 +88,7 @@ public class Ui {
             System.out.println(SPACE + header);
         }
         if (tasks.isEmpty()) {
-            System.out.println("Wow... so productive. Zero tasks.");
+            System.out.println(Ui.SPACE + "Wow... so productive. Zero tasks.");
         }
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(Ui.SPACE + (i + 1) + "." + tasks.get(i));
