@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 # Kiwee User Guide
 
 Kiwee is a **command-line task management application** that helps you organize your tasks efficiently.
@@ -17,7 +21,9 @@ Kiwee is a **command-line task management application** that helps you organize 
 - [Command Summary](#command-summary)
 
 ---
+
 ## Quick Start
+
 1. Ensure you have Java 17 or above installed in your computer
 2. Download the latest `.jar` from [here](https://github.com/fookang/ip/releases)
 3. Open your terminal/command prompt
@@ -32,12 +38,14 @@ Kiwee is a **command-line task management application** that helps you organize 
     | ' /  | |  \ \ /\ / / |  _|  |  _|
     | . \  | |   \ V  V /  | |___ | |___
     |_|\_\|___|   \_/\_/   |_____| |_____|
-    
-    Kiwee reporting for duty  
+
+    Kiwee reporting for duty
     How can I help you?
     ____________________________________________________________
 ```
+
 ---
+
 ## Features
 
 ### Adding Todo Tasks
@@ -47,11 +55,13 @@ Add simple tasks without any time constraints.
 **Format:** `todo <description>`
 
 **Example:**
+
 ```
 todo Read a book
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Another one? Fine... I've added this task:
@@ -67,17 +77,20 @@ Add tasks with a specific due date.
 **Format:** `deadline <description> /by <date>`
 
 **Supported date formats:**
+
 - `yyyy-MM-dd` (e.g., 2025-12-25)
 - `yyyy-MM-dd HH:mm` (e.g., 2025-12-25 14:30)
 - `d/M/yyyy` (e.g., 25/12/2025)
 - `HH:mm` (today's date, using computer's local timezone)
 
 **Example:**
+
 ```
   deadline Submit CS2113 project /by 2025-10-03 23:59
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Another one? Fine... I've added this task:
@@ -93,11 +106,13 @@ Add tasks that occur during a specific time period.
 **Format:** `event <description> /from <start_time> /to <end_time>`
 
 **Example:**
+
 ```
 event Team meeting /from 2025-10-03 14:00 /to 2025-10-03 15:00
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Another one? Fine... I've added this task:
@@ -113,11 +128,13 @@ View all your tasks at once.
 **Format:** `list`
 
 **Example:**
+
 ```
 list
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     1.[T][ ] Read a book
@@ -133,11 +150,13 @@ Mark a task as completed.
 **Format:** `mark <task_number>`
 
 **Example:**
+
 ```
 mark 1
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Congrats, you finally achieved something!
@@ -152,11 +171,13 @@ Mark a completed task as not done.
 **Format:** `unmark <task_number>`
 
 **Example:**
+
 ```
 unmark 1
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     How did you manage to do reverse work??
@@ -171,11 +192,13 @@ Remove a task from your list permanently.
 **Format:** `delete <task_number>`
 
 **Example:**
+
 ```
 delete 2
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Deleted. Because pretending it never existed totally helps productivity.
@@ -191,11 +214,13 @@ Search for tasks containing specific keywords.
 **Format:** `find <keyword>`
 
 **Example:**
+
 ```
 find meeting
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Here you go!
@@ -210,11 +235,13 @@ Save your tasks and exit Kiwee.
 **Format:** `bye`
 
 **Example:**
+
 ```
 bye
 ```
 
 **Expected output:**
+
 ```
     ____________________________________________________________
     Bye! Kiwee hopes you're leaving to actually finish your
@@ -232,8 +259,9 @@ bye
 ---
 
 ## Command Summary
+
 | Action       | Command                                       |
-|--------------|-----------------------------------------------|
+| ------------ | --------------------------------------------- |
 | Add Todo     | `todo <description>`                          |
 | Add Deadline | `deadline <description> /by <date/time>`      |
 | Add Event    | `event <description> /from <start> /to <end>` |
