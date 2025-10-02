@@ -22,7 +22,7 @@ public class ByeCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return true, as this command terminates the application
      */

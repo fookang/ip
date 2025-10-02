@@ -1,7 +1,6 @@
 package Kiwee.command;
 
 import Kiwee.exception.AlreadyMarkedException;
-import Kiwee.exception.KiweeException;
 import Kiwee.utils.KiweeTaskList;
 import Kiwee.utils.Storage;
 import Kiwee.utils.Ui;
@@ -29,7 +28,7 @@ public class MarkCommand implements Command {
      * @throws AlreadyMarkedException If the task is already marked as done
      */
     @Override
-    public void execute(KiweeTaskList tasks, Storage storage) throws KiweeException {
+    public void execute(KiweeTaskList tasks, Storage storage) throws AlreadyMarkedException {
         if (tasks.get(id - 1).isDone()) {
             throw new AlreadyMarkedException(tasks.get(id - 1));
         }
@@ -38,7 +37,7 @@ public class MarkCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as marking a task as done does not exit the application
      */

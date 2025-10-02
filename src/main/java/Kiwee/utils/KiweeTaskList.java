@@ -21,7 +21,7 @@ public class KiweeTaskList implements Iterable<Task> {
     }
 
     /**
-     * Checks if the task list is empty.
+     * Returns whether the task list is empty.
      *
      * @return true if the list is empty, false otherwise
      */
@@ -39,7 +39,7 @@ public class KiweeTaskList implements Iterable<Task> {
     }
 
     /**
-     * Gets a task at the specified index.
+     * Returns the task at the specified index.
      *
      * @param i The index of the task to get
      * @return The task at the specified index
@@ -59,7 +59,7 @@ public class KiweeTaskList implements Iterable<Task> {
     }
 
     /**
-     * Removes and returns the task at the specified index.
+     * Returns and removes the task at the specified index.
      *
      * @param id The index of the task to remove
      * @return The removed task

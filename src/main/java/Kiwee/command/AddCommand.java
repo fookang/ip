@@ -22,7 +22,7 @@ public abstract class AddCommand implements Command {
     }
 
     /**
-     * Abstract method to build a specific type of task from the user input.
+     * Returns a new Task built from parsed user input
      *
      * @return A new Task object created from the user input
      * @throws KiweeException If the input format is invalid

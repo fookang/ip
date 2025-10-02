@@ -24,7 +24,7 @@ public class AddEventCommand extends AddCommand {
     }
 
     /**
-     * Builds an Event task from the user input.
+     * Returns an Event task built from the user's input.
      *
      * @return A new Event task
      * @throws KiweeException          If the input is empty
@@ -32,7 +32,8 @@ public class AddEventCommand extends AddCommand {
      * @throws EndBeforeStartException If the end time is before the start time
      */
     @Override
-    protected Task buildTask() throws KiweeException {
+    protected Task buildTask()
+            throws KiweeException, KiweeCommandException, EndBeforeStartException {
         if (input.isEmpty()) {
             throw new KiweeException("That's not an event, that's silence. Say something!");
         }
@@ -72,7 +73,7 @@ public class AddEventCommand extends AddCommand {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as adding an event does not exit the application
      */

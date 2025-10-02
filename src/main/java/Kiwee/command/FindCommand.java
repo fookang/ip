@@ -47,7 +47,7 @@ public class FindCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as finding tasks does not exit the application
      */

@@ -27,7 +27,7 @@ public class Storage {
     }
 
     /**
-     * Loads tasks from the data file into a task list.
+     * Returns a task list loaded from the data file.
      *
      * @return A KiweeTaskList containing all valid tasks from the file
      */
@@ -75,7 +75,8 @@ public class Storage {
             File parent = dataFile.getParentFile();
 
             if (parent != null && !parent.exists() && !parent.mkdirs()) {
-                System.err.println("Warning: Could not create directory " + parent.getAbsolutePath());
+                System.err.println("Warning: Could not create directory "
+                        + parent.getAbsolutePath());
                 return;
             }
 

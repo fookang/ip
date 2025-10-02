@@ -13,7 +13,7 @@ import Kiwee.command.UnmarkCommand;
 import Kiwee.exception.CorruptedLineException;
 import Kiwee.exception.InvalidTaskException;
 import Kiwee.exception.KiweeCommandException;
-import Kiwee.exception.KiweeException;
+import Kiwee.exception.WrongDateFormatException;
 import Kiwee.task.Deadline;
 import Kiwee.task.Event;
 import Kiwee.task.Task;
@@ -28,13 +28,15 @@ import java.time.LocalDateTime;
 public class Parser {
 
     /**
-     * Parses a data string from storage file into a Task object.
+     * Return a Task parsed from a storage line.
      *
      * @param line The data string to parse from storage
      * @return A Task object representing the parsed data
-     * @throws CorruptedLineException If the data string format is invalid
+     * @throws CorruptedLineException   If the data string format is invalid
+     * @throws WrongDateFormatException If the date string format is invalid
      */
-    public static Task parseData(String line) throws KiweeException {
+    public static Task parseData(String line)
+            throws CorruptedLineException, WrongDateFormatException {
         String[] word = line.split("\\|");
         if (word.length < 3) {
             throw new CorruptedLineException(line);
@@ -76,7 +78,7 @@ public class Parser {
     }
 
     /**
-     * Parses a user-inputted ID string into an integer.
+     * Return the task ID parsed from a user's input.
      *
      * @param variable The user-inputted ID string
      * @param tasks    The task list to validate the ID against
@@ -84,12 +86,14 @@ public class Parser {
      * @throws KiweeCommandException If the input is not a valid integer
      * @throws InvalidTaskException  If the ID is out of range
      */
-    private static int getId(String variable, KiweeTaskList tasks) throws KiweeException {
+    private static int getId(String variable, KiweeTaskList tasks)
+            throws KiweeCommandException, InvalidTaskException {
         int id;
         try {
             id = Integer.parseInt(variable);
         } catch (NumberFormatException e) {
-            throw new KiweeCommandException("I wanted digits, not whatever '" + variable + "' is supposed to be.");
+            throw new KiweeCommandException("I wanted digits, not whatever '"
+                    + variable + "' is supposed to be.");
         }
 
         if (id < 1 || id > tasks.size()) {
@@ -99,7 +103,7 @@ public class Parser {
     }
 
     /**
-     * Parses user input into a Command object.
+     * Return a command parsed from user's input string.
      *
      * @param userInput The user-inputted command string
      * @param tasks     The task list needed for commands
@@ -107,7 +111,8 @@ public class Parser {
      * @throws KiweeCommandException If the command is not recognized
      * @throws InvalidTaskException  If a task ID is invalid
      */
-    public static Command parseCommand(String userInput, KiweeTaskList tasks) throws KiweeException {
+    public static Command parseCommand(String userInput, KiweeTaskList tasks)
+            throws KiweeCommandException, InvalidTaskException {
         String[] words = userInput.split("\\s+", 2);
         String command = words[0].toLowerCase();
         String rest = words.length > 1 ? words[1] : "";
@@ -122,7 +127,8 @@ public class Parser {
             case "event" -> new AddEventCommand(rest);
             case "delete" -> new DeleteCommand(getId(rest, tasks));
             case "find" -> new FindCommand(rest);
-            default -> throw new KiweeCommandException("Congratulations, you invented a new command: '"
+            default -> throw new KiweeCommandException("Congratulations, "
+                    + "you invented a new command: '"
                     + command + "'\n" + Ui.SPACE + "Too bad Kiwee doesn't support it.");
         };
     }

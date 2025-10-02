@@ -19,7 +19,7 @@ public class AddTodoCommand extends AddCommand {
     }
 
     /**
-     * Builds a Todo task from the user input.
+     * Returns a Todo task built from the user's input.
      *
      * @return A new Todo task
      * @throws KiweeException If the input is empty
@@ -33,7 +33,7 @@ public class AddTodoCommand extends AddCommand {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as adding a todo does not exit the application
      */

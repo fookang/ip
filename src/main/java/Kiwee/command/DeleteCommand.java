@@ -33,7 +33,7 @@ public class DeleteCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as deleting a task does not exit the application
      */

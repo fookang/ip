@@ -21,7 +21,7 @@ public class ListCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as listing tasks does not exit the application
      */

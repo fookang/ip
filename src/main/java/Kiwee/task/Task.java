@@ -19,7 +19,7 @@ public abstract class Task {
     }
 
     /**
-     * Return the completion status of the Task
+     * Return the completion status of the Tasks.
      *
      * @return "X" if done, " " if not
      */
@@ -28,7 +28,7 @@ public abstract class Task {
     }
 
     /**
-     * Return the description of the Task
+     * Return the description of the Tasks.
      *
      * @return The description of this task
      */
@@ -44,7 +44,7 @@ public abstract class Task {
     }
 
     /**
-     * Checks if this task is done.
+     * Returns whether this task is done.
      *
      * @return true if the task is done, false otherwise
      */

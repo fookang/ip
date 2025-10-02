@@ -1,6 +1,5 @@
 package Kiwee.utils;
 
-import Kiwee.exception.KiweeException;
 import Kiwee.exception.WrongDateFormatException;
 
 import java.time.LocalDate;
@@ -28,14 +27,14 @@ public class Dates {
     };
 
     /**
-     * Parses a date string into a LocalDateTime object.
+     * Returns a LocalDateTime parsed from a date/time string.
      * For time-only input, uses today's date.
      *
      * @param date The date string to parse
      * @return A LocalDateTime object representing the parsed date
      * @throws WrongDateFormatException If the date format is not recognized
      */
-    public static LocalDateTime parseDate(String date) throws KiweeException {
+    public static LocalDateTime parseDate(String date) throws WrongDateFormatException {
         if (date == null || date.isEmpty()) {
             throw new WrongDateFormatException();
         }
@@ -45,7 +44,8 @@ public class Dates {
 
             try {
                 return LocalDate.parse(date, formatter).atStartOfDay();
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException ignored) {
+                // Intentionally ignore and try the next pattern
             }
         }
 
@@ -54,7 +54,8 @@ public class Dates {
 
             try {
                 return LocalDateTime.parse(date, formatter);
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException ignored) {
+                // Intentionally ignore and try the next pattern
             }
         }
 
@@ -63,7 +64,8 @@ public class Dates {
             try {
                 LocalTime time = LocalTime.parse(date, formatter);
                 return LocalDate.now().atTime(time);
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException ignored) {
+                // Intentionally ignore and try the next pattern
             }
         }
 
@@ -71,7 +73,7 @@ public class Dates {
     }
 
     /**
-     * Formats a LocalDateTime object into a readable date string.
+     * Returns a human-readable representation of LocalDateTime.
      *
      * @param date The LocalDateTime to format
      * @return A formatted date string in "MMM dd yyyy, h:mma" format

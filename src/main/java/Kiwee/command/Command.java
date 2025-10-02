@@ -19,7 +19,7 @@ public interface Command {
     void execute(KiweeTaskList tasks, Storage storage) throws KiweeException;
 
     /**
-     * Checks if this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return true if the app should exit, false otherwise
      */

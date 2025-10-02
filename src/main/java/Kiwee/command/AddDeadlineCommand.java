@@ -22,7 +22,7 @@ public class AddDeadlineCommand extends AddCommand {
     }
 
     /**
-     * Builds a Deadline task from the user input.
+     * Returns a Deadline task built from the user's input.
      * Parses the input to extract the description and due date, then creates a new Deadline task.
      *
      * @return A new Deadline task
@@ -30,7 +30,7 @@ public class AddDeadlineCommand extends AddCommand {
      * @throws KiweeCommandException If required keyword "/by" is missing, description is empty, or due date is empty
      */
     @Override
-    protected Task buildTask() throws KiweeException {
+    protected Task buildTask() throws KiweeException, KiweeCommandException {
         if (input.isEmpty()) {
             throw new KiweeException("That's not a deadline, that's silence. Say something!");
         }
@@ -55,7 +55,7 @@ public class AddDeadlineCommand extends AddCommand {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as adding a deadline does not exit the application
      */

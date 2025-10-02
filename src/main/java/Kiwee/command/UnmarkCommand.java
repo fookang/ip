@@ -1,7 +1,6 @@
 package Kiwee.command;
 
 import Kiwee.exception.AlreadyUnmarkedException;
-import Kiwee.exception.KiweeException;
 import Kiwee.utils.KiweeTaskList;
 import Kiwee.utils.Storage;
 import Kiwee.utils.Ui;
@@ -29,7 +28,7 @@ public class UnmarkCommand implements Command {
      * @throws AlreadyUnmarkedException If the task is already marked as not done
      */
     @Override
-    public void execute(KiweeTaskList tasks, Storage storage) throws KiweeException {
+    public void execute(KiweeTaskList tasks, Storage storage) throws AlreadyUnmarkedException {
         if (!tasks.get(id - 1).isDone()) {
             throw new AlreadyUnmarkedException(tasks.get(id - 1));
         }
@@ -38,7 +37,7 @@ public class UnmarkCommand implements Command {
     }
 
     /**
-     * Indicates whether this command should exit the application.
+     * Returns whether this command should exit the application.
      *
      * @return false, as marking a task as not done does not exit the application
      */

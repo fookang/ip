@@ -13,7 +13,8 @@ public class Ui {
 
     public static final String SPACE = "    ";
 
-    private static final String PARTITION = SPACE + "____________________________________________________________";
+    private static final String PARTITION = SPACE
+            + "____________________________________________________________";
 
     private static final String KIWEELOGO = """
              _  __ ___ __        __ _____  _____ 
@@ -68,7 +69,7 @@ public class Ui {
     }
 
     /**
-     * Reads a command from the user input.
+     * Returns the user's command.
      *
      * @return The trimmed user input command
      */
@@ -115,7 +116,8 @@ public class Ui {
         printLine();
         System.out.println(SPACE + "Another one? Fine... I've added this task:");
         System.out.println(SPACE + "Added: " + task);
-        System.out.println(SPACE + "Your list now has " + count + " tasks. Good luck surviving that.");
+        System.out.println(SPACE + "Your list now has "
+                + count + " tasks. Good luck surviving that.");
         printLine();
     }
 
@@ -151,7 +153,8 @@ public class Ui {
      */
     public static void printTaskDeleted(Task task, int count) {
         printLine();
-        System.out.println(SPACE + "Deleted. Because pretending it never existed totally helps productivity.");
+        System.out.println(SPACE + "Deleted. "
+                + "Because pretending it never existed totally helps productivity.");
         System.out.println(SPACE + task);
         System.out.println(SPACE + "You have " + count + " tasks in your list");
         printLine();
@@ -169,11 +172,11 @@ public class Ui {
                 To add deadline:   deadline <description> /by <when>
                 To add event:      event <description> /from <start> /to <end>
                 Mark / Unmark:     mark <id> | unmark <id>
-                Other:             list | bye """.replaceAll("(?m)^", SPACE));
+                Other:             list | bye""".replaceAll("(?m)^", SPACE));
     }
 
     /**
-     * Gets the formatted command help message.
+     * Returns the formatted command help message.
      *
      * @return A string containing all available commands and their usage
      */
